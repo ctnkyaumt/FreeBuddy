@@ -31,7 +31,7 @@ jobs:
       - name: Cache pub dependencies
         uses: actions/cache@v4
         with:
-          path: ${{ env.PUB_CACHE }}
+          path: ~/.pub-cache
           key: ${{ runner.OS }}-pub-${{ hashFiles('**/pubspec.lock') }}
           restore-keys: |
             ${{ runner.OS }}-pub-
