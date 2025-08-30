@@ -30,7 +30,7 @@ jobs:
         # Clean branch name: https://stackoverflow.com/a/58034787
         run: mv ./build/app/outputs/flutter-apk/app-release.apk ./freebuddy-nightly.apk
       - name: Upload apk as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: freebuddy-nightly
           path: ./freebuddy-nightly.apk
