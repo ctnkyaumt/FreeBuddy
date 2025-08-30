@@ -13,24 +13,55 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1  # Shallow clone for faster checkout
+      
       - name: Parse fvm to set flutter version
         run: echo "flutter_version=$(cat .fvm/fvm_config.json | jq -r .flutterSdkVersion)" >> $GITHUB_ENV
+      
       - name: Cache Flutter
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: /opt/hostedtoolcache/flutter
           key: ${{ runner.OS }}-flutter-install-cache-${{ env.flutter_version }}-${{ env.flutter_channel }}
+          restore-keys: |
+            ${{ runner.OS }}-flutter-install-cache-${{ env.flutter_version }}-
+            ${{ runner.OS }}-flutter-install-cache-
+      
+      - name: Cache pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.PUB_CACHE }}
+          key: ${{ runner.OS }}-pub-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            ${{ runner.OS }}-pub-
+      
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.OS }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          restore-keys: |
+            ${{ runner.OS }}-gradle-
+      
       - uses: subosito/flutter-action@v2
         with:
           flutter-version: ${{ env.flutter_version }}
           channel: ${{ env.flutter_channel }}
+      
+      - name: Get dependencies
+        run: flutter pub get
+      
       - name: Build apk
-        run: flutter build apk --target-platform android-arm64
+        run: flutter build apk --target-platform android-arm64 --release
+      
       - name: Rename apk
-        # Clean branch name: https://stackoverflow.com/a/58034787
         run: mv ./build/app/outputs/flutter-apk/app-release.apk ./freebuddy-nightly.apk
+      
       - name: Upload apk as artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: freebuddy-nightly
           path: ./freebuddy-nightly.apk

@@ -30,9 +30,9 @@ class DoubleTapSection extends StatelessWidget {
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
-            ListTile(
-              title: Text(l.pageHeadphonesSettingsDoubleTapLeft),
-              trailing: DropdownButton<DoubleTap>(
+                         ListTile(
+               title: Text(l.pageHeadphonesSettingsLeftBud),
+               trailing: DropdownButton<DoubleTap>(
                 value: settingsValue.doubleTapLeft,
                 onChanged: (value) {
                   if (value != null) {
@@ -49,9 +49,9 @@ class DoubleTapSection extends StatelessWidget {
                 }).toList(),
               ),
             ),
-            ListTile(
-              title: Text(l.pageHeadphonesSettingsDoubleTapRight),
-              trailing: DropdownButton<DoubleTap>(
+                         ListTile(
+               title: Text(l.pageHeadphonesSettingsRightBud),
+               trailing: DropdownButton<DoubleTap>(
                 value: settingsValue.doubleTapRight,
                 onChanged: (value) {
                   if (value != null) {
@@ -74,13 +74,13 @@ class DoubleTapSection extends StatelessWidget {
     );
   }
 
-  String _getDoubleTapText(DoubleTap tap, AppLocalizations l) {
-    return switch (tap) {
-      DoubleTap.nothing => l.pageHeadphonesSettingsDoubleTapNothing,
-      DoubleTap.voiceAssistant => l.pageHeadphonesSettingsDoubleTapVoiceAssistant,
-      DoubleTap.playPause => l.pageHeadphonesSettingsDoubleTapPlayPause,
-      DoubleTap.next => l.pageHeadphonesSettingsDoubleTapNext,
-      DoubleTap.previous => l.pageHeadphonesSettingsDoubleTapPrevious,
-    };
-  }
+     String _getDoubleTapText(DoubleTap tap, AppLocalizations l) {
+     return switch (tap) {
+       DoubleTap.nothing => l.pageHeadphonesSettingsDoubleTapNone,
+       DoubleTap.voiceAssistant => l.pageHeadphonesSettingsDoubleTapAssist,
+       DoubleTap.playPause => l.pageHeadphonesSettingsDoubleTapPlayPause,
+       DoubleTap.next => l.pageHeadphonesSettingsDoubleTapNextSong,
+       DoubleTap.previous => l.pageHeadphonesSettingsDoubleTapPrevSong,
+     };
+   }
 }
