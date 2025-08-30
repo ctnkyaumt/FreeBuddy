@@ -7,6 +7,7 @@ import '../../common/headphones_connection_ensuring_overlay.dart';
 
 import 'huawei/4i/exports.dart' as fb4i;
 import 'huawei/5i/exports.dart' as fb5i;
+import 'huawei/se2/exports.dart' as fbse2;
 
 class HeadphonesSettingsPage extends StatelessWidget {
   const HeadphonesSettingsPage({super.key});
@@ -64,7 +65,7 @@ List<Widget> widgetsForModel(HeadphonesSettings settings, AppLocalizations l) {
     ];
   } else if (settings is HeadphonesSettings<HuaweiFreeBudsSE2Settings>) {
     return [
-      DoubleTapSection(settings),
+      fbse2.DoubleTapSection(settings),
     ];
   } else {
     throw "You shouldn't be on this screen if you don't have settings!";
